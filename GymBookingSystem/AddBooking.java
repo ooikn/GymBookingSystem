@@ -5,7 +5,14 @@
 package GymBookingSystem;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,13 +20,16 @@ import javax.swing.JOptionPane;
  * @author ooikn
  */
 public class AddBooking extends javax.swing.JFrame {
-
+    private String memberId;
+    private BookingList bookingList;
     /**
      * Creates new form AddBooking
      */
-    public AddBooking() {
+    public AddBooking(String memberId) {
+        this.memberId = memberId;
+        this.bookingList = new BookingList();
         initComponents();
-        dateChooser.setMinSelectableDate(new Date());
+        dateChooser.setMinSelectableDate(new Date()); // set to current date to restrict selection of previous date
     }
 
     /**
@@ -175,22 +185,28 @@ public class AddBooking extends javax.swing.JFrame {
     }//GEN-LAST:event_resetBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-        if(dateChooser.getDate() == null){
-            JOptionPane.showMessageDialog(this, "Please select a date!");
-        }
-        else if(startTimeCb.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(this, "Please select start time!");
-        }
-        else if(endTimeCb.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(this, "Please select end time!");
+        if(dateChooser.getDate() == null || startTimeCb.getSelectedIndex() == 0 || endTimeCb.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Please fill in all fields!");
         }
         else if(startTimeCb.getSelectedIndex() > endTimeCb.getSelectedIndex()){
             JOptionPane.showMessageDialog(this, "Start time must be before end time!");
         }
         else{
             Date selectedDate = dateChooser.getDate();
-            String startTime = (String) startTimeCb.getSelectedItem();
-            String endTime = (String) endTimeCb.getSelectedItem();
+            String startTimeStr = (String) startTimeCb.getSelectedItem();
+            String endTimeStr = (String) endTimeCb.getSelectedItem();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime startTime = LocalTime.parse(startTimeStr, format) ;
+            LocalTime endTime = LocalTime.parse(endTimeStr, format) ;
+            String bookingId;
+            do {
+                int randNum = new Random().nextInt(1000);
+                bookingId = "B" + randNum;
+            } while (bookingList.searchBooking(bookingId) != null);
+            Booking newBooking = new GymEquipmentBooking(memberId, bookingId, selectedDate, startTime, endTime);
+            bookingList.addBooking(newBooking);
+            JOptionPane.showMessageDialog(this, "Booking added successfully!");
+            resetBtnActionPerformed(null);
         }
     }//GEN-LAST:event_confirmBtnActionPerformed
 
@@ -224,7 +240,7 @@ public class AddBooking extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddBooking().setVisible(true);
+                new AddBooking("B001").setVisible(true);
             }
         });
     }

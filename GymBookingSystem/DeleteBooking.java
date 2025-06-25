@@ -10,13 +10,15 @@ package GymBookingSystem;
  */
 import javax.swing.JOptionPane;
 public class DeleteBooking extends javax.swing.JFrame {
-
+    private String memberId;
+    private BookingList bookingList;
     /**
      * Creates new form DeleteBooking
      */
-    public DeleteBooking() {
+    public DeleteBooking(String memberId) {
+        this.memberId = memberId;
+        this.bookingList = new BookingList();
         initComponents();
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     /**
@@ -123,7 +125,10 @@ public class DeleteBooking extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         String bookingId = bookingIdTf.getText();
-        
+        bookingList = new BookingList();
+        if(bookingList.getBookingId(bookingId).equals(bookingId)){
+            bookingList.deleteBooking(bookingId);
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
@@ -160,7 +165,7 @@ public class DeleteBooking extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DeleteBooking().setVisible(true);
+                new DeleteBooking("B001").setVisible(true);
             }
         });
     }

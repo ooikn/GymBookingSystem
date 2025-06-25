@@ -8,18 +8,16 @@ package GymBookingSystem;
  *
  * @author ooikn
  */
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
-import java.util.Random;
 public abstract class Booking {
-    private String bookingId;
     protected String memberId;
+    private String bookingId;
     private Date date;
     private LocalTime startTime;
     private LocalTime endTime;
     
-    public Booking (String bookingId, String memberId, Date date, LocalTime startTime, LocalTime endTime){
+    public Booking (String memberId, String bookingId, Date date, LocalTime startTime, LocalTime endTime){
         this.bookingId = bookingId;
         this.memberId = memberId;
         this.date = date;
@@ -27,14 +25,12 @@ public abstract class Booking {
         this.endTime = endTime;
     }
     
-    public String getBookingId(){
-        Random rand = new Random();
-        int randomId = rand.nextInt(9000) + 1; //randomly generate a number between 1 to 9000
-        return "B" + randomId;
-    }
-    
     public String getMemberId(){
         return memberId;
+    }
+    
+    public String getBookingId(){
+        return bookingId;
     }
     
     public Date getDate(){

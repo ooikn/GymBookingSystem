@@ -8,15 +8,15 @@ package GymBookingSystem;
  *
  * @author ooikn
  */
-import java.time.LocalDate;
+
 import java.time.LocalTime;
 import java.util.Date;
 public class GymEquipmentBooking extends Booking{
     private final double pricePerHour = 10;
     private double totalPrice;
     
-    public GymEquipmentBooking(String bookingId, String memberId, Date date, LocalTime startTime, LocalTime endTime){
-        super(bookingId, memberId, date, startTime, endTime);
+    public GymEquipmentBooking(String memberId, String bookingId, Date date, LocalTime startTime, LocalTime endTime){
+        super(memberId, bookingId, date, startTime, endTime);
     }
     
     @Override
@@ -33,6 +33,6 @@ public class GymEquipmentBooking extends Booking{
     
     @Override
     public String toString(){
-        return "Booking ID: " + super.getBookingId() + "\nMember ID: " + super.getMemberId() + "\nDate: " + super.getDate() + "\nTime: " + super.getStartTime() + " - " + super.getEndTime();
+        return "Booking ID: " + super.getBookingId() + "\nDate: " + super.getDate() + "\nTime: " + super.getStartTime() + " - " + super.getEndTime();
     }
 }

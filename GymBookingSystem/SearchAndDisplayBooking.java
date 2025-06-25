@@ -4,18 +4,33 @@
  */
 package GymBookingSystem;
 
+
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ooikn
  */
 public class SearchAndDisplayBooking extends javax.swing.JFrame {
-
+    private BookingList bookingList;
     /**
      * Creates new form SearchAndDisplayBooking
      */
     public SearchAndDisplayBooking() {
         initComponents();
+        bookingList = new BookingList();
+        displayAllBooking();
     }
+    
+    private void displayAllBooking() {
+        StringBuilder allBookings = new StringBuilder();
+        for (Booking booking : bookingList.getBookingList()) {
+            allBookings.append(booking.toString()).append("\n\n");
+        }
+        bookingDisplayArea.setText(allBookings.toString());
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,11 +42,11 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        bookingIdTf = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        bookingDisplayArea = new javax.swing.JTextArea();
+        searchBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,11 +54,16 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
 
         jLabel2.setText("List of Bookings");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        bookingDisplayArea.setColumns(20);
+        bookingDisplayArea.setRows(5);
+        jScrollPane1.setViewportView(bookingDisplayArea);
 
-        jButton1.setText("Search");
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,9 +76,9 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(bookingIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(searchBtn))
                     .addComponent(jScrollPane1))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
@@ -68,8 +88,8 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(bookingIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchBtn))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
@@ -79,6 +99,16 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        String bookingId = bookingIdTf.getText().trim();
+        Booking found = bookingList.searchBooking(bookingId);
+        if (found != null) {
+            bookingDisplayArea.setText(found.toString());
+        } else {
+            JOptionPane.showMessageDialog(this, "Booking not found");
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,11 +146,11 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextArea bookingDisplayArea;
+    private javax.swing.JTextField bookingIdTf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton searchBtn;
     // End of variables declaration//GEN-END:variables
 }

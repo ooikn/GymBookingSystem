@@ -39,7 +39,7 @@ public class MemberList {
     }
     
     public void saveToFile(){
-        File outFile = new File("members.data");
+        File outFile = new File("members.txt");
         FileWriter outFileStream = null;
         PrintWriter outStream = null;    
         
@@ -64,16 +64,14 @@ public class MemberList {
     }
     
     private void loadFromFile() {
-        File inFile = new File("members.data");
+        File inFile = new File("members.txt");
         if (!inFile.exists()) {
-            // If the file doesn't exist, there are no members to load.
-            // Create an empty file to prevent FileNotFoundException later.
             try {
-                inFile.createNewFile();
+                inFile.createNewFile(); //create file if not exist
             } catch (IOException e) {
                 System.err.println("Error creating members.data file: " + e.getMessage());
             }
-            return; // No file to read from, so return.
+            //return;
         }
 
         try (BufferedReader inStream = new BufferedReader(new FileReader(inFile))) {
@@ -92,7 +90,7 @@ public class MemberList {
     }
     
     public boolean validateLogin(String username, String password){
-        try (BufferedReader inStream = new BufferedReader(new FileReader("members.data"))) {
+        try (BufferedReader inStream = new BufferedReader(new FileReader("members.txt"))) {
             String str;
             while ((str = inStream.readLine()) != null) {
                 String[] parts = str.split(",");
@@ -107,7 +105,7 @@ public class MemberList {
     }
     
     public String getMemberId(String username){
-        try (BufferedReader inStream = new BufferedReader(new FileReader("members.data"))) {
+        try (BufferedReader inStream = new BufferedReader(new FileReader("members.txt"))) {
             String str;
             while ((str = inStream.readLine()) != null) {
                 String[] parts = str.split(",");
@@ -123,15 +121,16 @@ public class MemberList {
     
     public Member getMemberInfo(String memberId){
         try{
-            File inFile = new File("members.data");
+            File inFile = new File("members.txt");
             FileReader inFileStream = new FileReader(inFile);
             BufferedReader inStream = new BufferedReader(inFileStream);
             String str;
             while ((str = inStream.readLine()) != null){
                 String[] parts = str.split(",");
                 if (parts[0].equals(memberId)) {
-                    return new Member(parts[0], parts[1], parts[2], parts[3], parts[4]);
                     //memberId, username, phoneNo, email, password
+                    return new Member(parts[0], parts[1], parts[2], parts[3], parts[4]);
+                    
                 }
             }
             inStream.close();

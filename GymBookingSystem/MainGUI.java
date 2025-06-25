@@ -126,13 +126,13 @@ public class MainGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editBookingMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookingMenuItemActionPerformed
-        UpdateBooking updateBookingForm = new UpdateBooking();
+        UpdateBooking updateBookingForm = new UpdateBooking(memberId);
         updateBookingForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         updateBookingForm.setVisible(true);
     }//GEN-LAST:event_editBookingMenuItemActionPerformed
 
     private void addBookingMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookingMenuItemActionPerformed
-        AddBooking addBookingForm = new AddBooking();
+        AddBooking addBookingForm = new AddBooking(memberId);
         addBookingForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addBookingForm.setVisible(true);
 
@@ -145,7 +145,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_searchBookingMenuItemActionPerformed
 
     private void deleteBookingMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookingMenuItemActionPerformed
-        DeleteBooking deleteBookingForm = new DeleteBooking();
+        DeleteBooking deleteBookingForm = new DeleteBooking(memberId);
         deleteBookingForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         deleteBookingForm.setVisible(true);
     }//GEN-LAST:event_deleteBookingMenuItemActionPerformed
