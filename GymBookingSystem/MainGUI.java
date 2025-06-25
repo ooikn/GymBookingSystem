@@ -41,7 +41,7 @@ public class MainGUI extends javax.swing.JFrame {
         logoutMenuItem = new javax.swing.JMenuItem();
         manageBookingMenu = new javax.swing.JMenu();
         addBookingMenuItem = new javax.swing.JMenuItem();
-        editBookingMenuItem = new javax.swing.JMenuItem();
+        updateBookingMenuItem = new javax.swing.JMenuItem();
         searchBookingMenuItem = new javax.swing.JMenuItem();
         deleteBookingMenuItem = new javax.swing.JMenuItem();
 
@@ -94,13 +94,13 @@ public class MainGUI extends javax.swing.JFrame {
         });
         manageBookingMenu.add(addBookingMenuItem);
 
-        editBookingMenuItem.setText("Edit Booking");
-        editBookingMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        updateBookingMenuItem.setText("Update Booking");
+        updateBookingMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editBookingMenuItemActionPerformed(evt);
+                updateBookingMenuItemActionPerformed(evt);
             }
         });
-        manageBookingMenu.add(editBookingMenuItem);
+        manageBookingMenu.add(updateBookingMenuItem);
 
         searchBookingMenuItem.setText("Search Booking");
         searchBookingMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -125,11 +125,11 @@ public class MainGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void editBookingMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookingMenuItemActionPerformed
+    private void updateBookingMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBookingMenuItemActionPerformed
         UpdateBooking updateBookingForm = new UpdateBooking(memberId);
         updateBookingForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         updateBookingForm.setVisible(true);
-    }//GEN-LAST:event_editBookingMenuItemActionPerformed
+    }//GEN-LAST:event_updateBookingMenuItemActionPerformed
 
     private void addBookingMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookingMenuItemActionPerformed
         AddBooking addBookingForm = new AddBooking(memberId);
@@ -139,7 +139,7 @@ public class MainGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addBookingMenuItemActionPerformed
 
     private void searchBookingMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBookingMenuItemActionPerformed
-        SearchAndDisplayBooking searchAndDisplayBookingForm = new SearchAndDisplayBooking();
+        SearchAndDisplayBooking searchAndDisplayBookingForm = new SearchAndDisplayBooking(memberId);
         searchAndDisplayBookingForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         searchAndDisplayBookingForm.setVisible(true);
     }//GEN-LAST:event_searchBookingMenuItemActionPerformed
@@ -207,7 +207,6 @@ public class MainGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addBookingMenuItem;
     private javax.swing.JMenuItem deleteBookingMenuItem;
-    private javax.swing.JMenuItem editBookingMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -216,5 +215,6 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JMenu manageBookingMenu;
     private javax.swing.JMenuItem profileMenuItem;
     private javax.swing.JMenuItem searchBookingMenuItem;
+    private javax.swing.JMenuItem updateBookingMenuItem;
     // End of variables declaration//GEN-END:variables
 }

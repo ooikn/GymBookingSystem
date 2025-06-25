@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  * @author ooikn
  */
 public class MemberRegister extends javax.swing.JFrame {
-
+    private MemberList memberList;
     /**
      * Creates new form MemberRegister
      */
@@ -20,6 +20,7 @@ public class MemberRegister extends javax.swing.JFrame {
         initComponents();
         passwordTf.setEchoChar('•');
         repasswordTf.setEchoChar('•');
+        memberList = new MemberList();
     }
 
     /**
@@ -190,12 +191,14 @@ public class MemberRegister extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Password do not match, please enter again!");
         }
         else{
-            Random rand = new Random();
-            int randNum = rand.nextInt(1000);
-            String memberId = "M" + Integer.toString(randNum);
+            String memberId;
+            do{
+                Random rand = new Random();
+                int randNum = rand.nextInt(1000);
+                memberId = "M" + Integer.toString(randNum);
+            }while (memberList.searchMember(memberId) != null);
             Member newMember = new Member(memberId, username, phoneNumber, email, password);
             
-            MemberList memberList = new MemberList();
             memberList.addMember(newMember);
             MainGUI mainGUI = new MainGUI();
             mainGUI.setMemberId(memberId);
@@ -216,12 +219,12 @@ public class MemberRegister extends javax.swing.JFrame {
         passwordTf.setEchoChar((char)0);
         repasswordTf.setEchoChar((char)0);
         toggleViewPwdBtn.setText("Hide");
-    } else {
-        // Hide passwords
-        passwordTf.setEchoChar('•');
-        repasswordTf.setEchoChar('•');
-        toggleViewPwdBtn.setText("Show");
-    }
+        } else {
+            // Hide passwords
+            passwordTf.setEchoChar('•');
+            repasswordTf.setEchoChar('•');
+            toggleViewPwdBtn.setText("Show");
+        }
     }//GEN-LAST:event_toggleViewPwdBtnActionPerformed
 
     /**

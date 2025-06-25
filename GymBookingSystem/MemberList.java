@@ -38,6 +38,15 @@ public class MemberList {
         saveToFile();
     }
     
+    public Member searchMember(String memberId) {
+        for (Member m : memberList) {
+            if (m.getMemberId().equalsIgnoreCase(memberId)) {
+                return m;  
+            }
+        }
+        return null;
+    }
+    
     public void saveToFile(){
         File outFile = new File("members.txt");
         FileWriter outFileStream = null;

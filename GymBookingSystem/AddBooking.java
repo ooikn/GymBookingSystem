@@ -4,13 +4,9 @@
  */
 package GymBookingSystem;
 
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import javax.swing.JOptionPane;
@@ -29,7 +25,9 @@ public class AddBooking extends javax.swing.JFrame {
         this.memberId = memberId;
         this.bookingList = new BookingList();
         initComponents();
-        dateChooser.setMinSelectableDate(new Date()); // set to current date to restrict selection of previous date
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1); 
+        dateChooser.setMinSelectableDate(calendar.getTime()); 
     }
 
     /**
@@ -200,7 +198,8 @@ public class AddBooking extends javax.swing.JFrame {
             LocalTime endTime = LocalTime.parse(endTimeStr, format) ;
             String bookingId;
             do {
-                int randNum = new Random().nextInt(1000);
+                Random rand = new Random();
+                int randNum = rand.nextInt(1000);
                 bookingId = "B" + randNum;
             } while (bookingList.searchBooking(bookingId) != null);
             Booking newBooking = new GymEquipmentBooking(memberId, bookingId, selectedDate, startTime, endTime);

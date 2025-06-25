@@ -5,6 +5,7 @@
 package GymBookingSystem;
 
 
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,22 +13,37 @@ import javax.swing.JOptionPane;
  * @author ooikn
  */
 public class SearchAndDisplayBooking extends javax.swing.JFrame {
+    private String memberId;
     private BookingList bookingList;
     /**
      * Creates new form SearchAndDisplayBooking
      */
-    public SearchAndDisplayBooking() {
+    public SearchAndDisplayBooking(String memberId) {
+        this.memberId = memberId;
         initComponents();
         bookingList = new BookingList();
         displayAllBooking();
     }
     
     private void displayAllBooking() {
-        StringBuilder allBookings = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+        boolean found = false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        
         for (Booking booking : bookingList.getBookingList()) {
-            allBookings.append(booking.toString()).append("\n\n");
+            if (booking.getMemberId().equals(memberId)) {
+                String formattedDate = dateFormat.format(booking.getDate());
+                sb.append("Booking ID: ").append(booking.getBookingId()).append("\n");
+                sb.append("Date: ").append(formattedDate).append("\n"); // Use the formatted date
+                sb.append("Start Time: ").append(booking.getStartTime()).append("\n");
+                sb.append("End Time: ").append(booking.getEndTime()).append("\n\n");
+                found = true;
+            }
         }
-        bookingDisplayArea.setText(allBookings.toString());
+        if(!found){
+            sb.append("You have not make any booking.");
+        }
+        bookingDisplayArea.setText(sb.toString());
     }
     
     
@@ -140,7 +156,7 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchAndDisplayBooking().setVisible(true);
+                new SearchAndDisplayBooking("B001").setVisible(true);
             }
         });
     }

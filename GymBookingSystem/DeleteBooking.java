@@ -17,7 +17,7 @@ public class DeleteBooking extends javax.swing.JFrame {
      */
     public DeleteBooking(String memberId) {
         this.memberId = memberId;
-        this.bookingList = new BookingList();
+        bookingList = new BookingList();
         initComponents();
     }
 
@@ -125,9 +125,19 @@ public class DeleteBooking extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         String bookingId = bookingIdTf.getText();
-        bookingList = new BookingList();
-        if(bookingList.getBookingId(bookingId).equals(bookingId)){
-            bookingList.deleteBooking(bookingId);
+        boolean found = false;
+        
+        for (Booking booking : bookingList.getBookingList()) {
+            if (booking.getMemberId().equals(memberId)) {
+                bookingList.deleteBooking(bookingId);
+                bookingIdTf.setText("");
+                JOptionPane.showMessageDialog(this, "Booking deleted!");
+                found = true;
+                break;
+            }
+        }
+        if(found == false){
+            JOptionPane.showMessageDialog(this, "Booking not found!");
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 

@@ -10,6 +10,7 @@ package GymBookingSystem;
  */
 
 import java.time.LocalTime;
+
 import java.util.Date;
 public class GymEquipmentBooking extends Booking{
     private final double pricePerHour = 10;
