@@ -55,6 +55,7 @@ public class AddBooking extends javax.swing.JFrame {
         endTimeCb = new javax.swing.JComboBox<>();
         datePanel = new javax.swing.JPanel();
         dateChooser = new com.toedter.calendar.JDateChooser();
+        exitBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,29 +109,40 @@ public class AddBooking extends javax.swing.JFrame {
         dateChooser.setMaximumSize(new java.awt.Dimension(100, 80));
         dateChooser.setPreferredSize(new java.awt.Dimension(100, 22));
 
+        exitBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        exitBtn.setText("Exit");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(startTimeCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(endTimeCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(exitBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(resetBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(confirmBtn))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(startTimeCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(endTimeCb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(datePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(resetBtn)
-                .addGap(18, 18, 18)
-                .addComponent(confirmBtn))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +164,8 @@ public class AddBooking extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(resetBtn)
-                    .addComponent(confirmBtn))
+                    .addComponent(confirmBtn)
+                    .addComponent(exitBtn))
                 .addGap(38, 38, 38))
         );
 
@@ -207,12 +220,19 @@ public class AddBooking extends javax.swing.JFrame {
                 int randNum = rand.nextInt(1000);
                 bookingId = "B" + randNum;
             } while (bookingList.searchBooking(bookingId) != null);
-            Booking newBooking = new GymEquipmentBooking(memberId, bookingId, selectedDate, startTime, endTime);
+            Booking tempWithoutPrice = new GymEquipmentBooking(memberId, bookingId, selectedDate, startTime, endTime);
+            tempWithoutPrice.calculateTotalPrice();
+            double totalPrice = ((GymEquipmentBooking) tempWithoutPrice).getTotalPrice();
+            Booking newBooking = new GymEquipmentBooking(memberId, bookingId, selectedDate, startTime, endTime, totalPrice);
             bookingList.addBooking(newBooking);
             JOptionPane.showMessageDialog(this, "Booking added successfully!");
             resetBtnActionPerformed(null);
         }
     }//GEN-LAST:event_confirmBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exitBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,6 +274,7 @@ public class AddBooking extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JPanel datePanel;
     private javax.swing.JComboBox<String> endTimeCb;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

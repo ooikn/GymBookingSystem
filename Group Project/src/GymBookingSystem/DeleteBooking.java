@@ -37,6 +37,7 @@ public class DeleteBooking extends javax.swing.JFrame {
         deleteBtn = new javax.swing.JButton();
         resetBtn = new javax.swing.JButton();
         bookingIdTf = new javax.swing.JTextField();
+        exitBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,6 +62,14 @@ public class DeleteBooking extends javax.swing.JFrame {
             }
         });
 
+        exitBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        exitBtn.setText("Exit");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -73,10 +82,11 @@ public class DeleteBooking extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bookingIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(exitBtn)
+                        .addGap(18, 18, 18)
                         .addComponent(resetBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(deleteBtn)
-                        .addGap(55, 55, 55)))
+                        .addComponent(deleteBtn)))
                 .addGap(0, 2, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -86,13 +96,11 @@ public class DeleteBooking extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(bookingIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(deleteBtn))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resetBtn)))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(resetBtn)
+                    .addComponent(deleteBtn)
+                    .addComponent(exitBtn))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -143,6 +151,10 @@ public class DeleteBooking extends javax.swing.JFrame {
         bookingIdTf.setText("");
     }//GEN-LAST:event_resetBtnActionPerformed
 
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exitBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -181,6 +193,7 @@ public class DeleteBooking extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bookingIdTf;
     private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

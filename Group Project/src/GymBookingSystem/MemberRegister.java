@@ -5,6 +5,7 @@
 package GymBookingSystem;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -107,7 +108,6 @@ public class MemberRegister extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(navigateToLoginLbl)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(phoneNoTf, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
@@ -115,7 +115,10 @@ public class MemberRegister extends javax.swing.JFrame {
                                     .addComponent(passwordTf)
                                     .addComponent(repasswordTf))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(toggleViewPwdBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(toggleViewPwdBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(navigateToLoginLbl)))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(170, 170, 170)
@@ -147,22 +150,23 @@ public class MemberRegister extends javax.swing.JFrame {
                     .addComponent(repasswordTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(registerBtn)
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addComponent(navigateToLoginLbl)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(99, 99, 99))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel1)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -185,10 +189,34 @@ public class MemberRegister extends javax.swing.JFrame {
         String password = new String(passwordTf.getPassword());
         String repassword = new String(repasswordTf.getPassword());
         
+        // check if username exist, if memberId is found means username exist
+        String gotMemberId = memberList.getMemberId(username);
+        // email format
+        String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        
+        // phone number format
+        String phoneRegex = "^(\\+60|60|0)1\\d{7,8}$";
+        
+        //password format
+        String passwordRegex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+
         if(username.isEmpty() || phoneNumber.isEmpty() ||email.isEmpty() || password.isEmpty() || repassword.isEmpty()){
             JOptionPane.showMessageDialog(this, "Please fill in all field!");
         }
-        else if(!password.equals(repassword)){
+        else if(gotMemberId != null){
+            JOptionPane.showMessageDialog(this, "Username already exist! Please proceed to login!");
+        }
+        else if(!Pattern.matches(phoneRegex, phoneNumber)){
+            JOptionPane.showMessageDialog(this, "Invalid phone number format!");
+        }
+        // check if the email do not match the email format
+        else if (!Pattern.matches(emailRegex, email)){
+            JOptionPane.showMessageDialog(this, "Invalid email format!");
+        }
+        else if (!Pattern.matches(passwordRegex, password)){
+            JOptionPane.showMessageDialog(this, "Invalid password format!");
+        }
+        else if (!password.equals(repassword)){
             JOptionPane.showMessageDialog(this, "Password do not match, please enter again!");
         }
         else{

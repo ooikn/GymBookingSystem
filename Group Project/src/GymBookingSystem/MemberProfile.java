@@ -10,15 +10,18 @@ package GymBookingSystem;
  *
  * @author ooikn
  */
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 public class MemberProfile extends javax.swing.JFrame {
     private String memberId;
     Member memberInfo;
+    MemberList memberList;
     
     public MemberProfile(String memberId) {    
         this.memberId = memberId;
         initComponents();
+        memberList = new MemberList();
         //password is set to hide by default
         passwordTf.setEchoChar('•');
         
@@ -39,8 +42,7 @@ public class MemberProfile extends javax.swing.JFrame {
     }
     
     private void displayProfileInfo() {
-        MemberList member = new MemberList();
-        memberInfo = member.getMemberProfile(memberId);
+        memberInfo = memberList.getMemberProfile(memberId);
         memberIdLbl.setText(memberInfo.getMemberId());
         usernameTf.setText(memberInfo.getUsername());
         phoneNoTf.setText(memberInfo.getPhoneNo());
@@ -141,7 +143,7 @@ public class MemberProfile extends javax.swing.JFrame {
                         .addGap(234, 234, 234))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(usernameTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
@@ -225,27 +227,47 @@ public class MemberProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_editBtnActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        // get the fields
+        String username = usernameTf.getText();
+        String phoneNo = phoneNoTf.getText();
+        String email = emailTf.getText().trim();
+        String password = new String(passwordTf.getPassword()).trim();
+        
+        // email format
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
+                            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        
+        // phone number format
+        String phoneRegex = "^(\\+60|60|0)1\\d{7,8}$";
+        
+        //password format
+        String passwordRegex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+
         // check if there is any empty field if the save button is clicked 
         if (usernameTf.getText().isEmpty() || phoneNoTf.getText().isEmpty() || emailTf.getText().isEmpty() || passwordTf.getPassword().length == 0) {
             // prompt member to fill in all fields
             JOptionPane.showMessageDialog(this, "Please fill in all fields!");
         }
-        //member filled in all fields
+        else if(!Pattern.matches(phoneRegex, phoneNo)){
+            JOptionPane.showMessageDialog(this, "Invalid phone number format!");
+        }
+        // check if the email do not match the email format
+        else if (!Pattern.matches(emailRegex, email)){
+            JOptionPane.showMessageDialog(this, "Invalid email format!");
+        }
+        else if (!Pattern.matches(passwordRegex, password)){
+            JOptionPane.showMessageDialog(this, "Invalid password format!");
+        }
+        //member filled in all fields correctly
         else{
-            // get the fields
-            String username = usernameTf.getText();
-            String phoneNo = phoneNoTf.getText();
-            String email = emailTf.getText();
-            String password = new String(passwordTf.getPassword());
-            
             //create new Member object with all the fields and pass it to memberInfo reference variable
             memberInfo = new Member(memberId, username, phoneNo, email, password);
-            MemberList memberList = new MemberList();
             memberList.updateMemberInfo(memberInfo); //overwrite existing member
             JOptionPane.showMessageDialog(this, "Profile updated successfully!");
+            // disable editing after update
+            disableEditing();
         }
-        // disable editing after update
-        disableEditing();
+        
         // enable edit button again
         editBtn.setEnabled(true);
         

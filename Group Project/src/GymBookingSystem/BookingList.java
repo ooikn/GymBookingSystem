@@ -42,8 +42,9 @@ public class BookingList {
     
     public Booking searchBooking(String bookingId) {
         for (Booking b : bookingList) {
-            if (b.getBookingId().equalsIgnoreCase(bookingId)) {
-                return b;  // return booking if found
+            GymEquipmentBooking gymBooking = (GymEquipmentBooking) b;
+            if (gymBooking.getBookingId().equalsIgnoreCase(bookingId)) {
+                return gymBooking;  // return booking if found
             }
         }
         return null; // return null if booking not found
@@ -77,22 +78,26 @@ public class BookingList {
             DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
                 
             for (Booking booking : bookingList) {
-
+                GymEquipmentBooking gymBooking = (GymEquipmentBooking) booking;
                 // convert date and time to string to store in file
                 String dateStr = dateFormat.format(booking.getDate());
                 String startTimeStr = booking.getStartTime().format(timeFormat);
                 String endTimeStr = booking.getEndTime().format(timeFormat);
                 
                 // Format: memberId,bookingId,date,startTime,endTime
-                outStream.println(booking.getMemberId() + "," + booking.getBookingId() + "," + dateStr + "," + startTimeStr + "," + endTimeStr);
+                outStream.println(gymBooking.getMemberId() + "," + gymBooking.getBookingId() + "," + dateStr + "," + startTimeStr + "," + endTimeStr + "," + gymBooking.getTotalPrice());
             }
         } catch (IOException e) {
             System.out.println("Error saving booking data: " + e.getMessage());
+        }finally {
+            if (outStream != null) {
+                outStream.close(); 
+                System.out.println("PrintWriter closed."); 
+            }
         }
     }
     
     private void loadFromFile() {
-        //bookingList.clear(); //clear existing booking to prevent duplicate on reload
         
         File inFile = new File("bookings.txt");
         
@@ -128,15 +133,16 @@ public class BookingList {
                     Date date = dateFormat.parse(parts[2]); 
                     LocalTime startTime = LocalTime.parse(parts[3], timeFormat); 
                     LocalTime endTime = LocalTime.parse(parts[4], timeFormat); 
+                    double totalPrice = Double.parseDouble(parts[5]);
                     
                     // load every bookings line by line into the array list
-                    bookingList.add(new GymEquipmentBooking(memberId, bookingId, date, startTime, endTime));
+                    bookingList.add(new GymEquipmentBooking(memberId, bookingId, date, startTime, endTime, totalPrice));
                 } catch (Exception e) { 
                     System.out.println("Error creating booking object for line: " + str + ". Error: " + e.getMessage());
                 }
             }
         } catch (IOException e) {
             System.out.println("Error reading member data on load: " + e.getMessage());
-        }
+        } 
     }
 }

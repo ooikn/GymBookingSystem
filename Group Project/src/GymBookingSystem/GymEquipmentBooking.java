@@ -10,6 +10,7 @@ package GymBookingSystem;
  */
 
 // import to use the date and time
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -22,6 +23,14 @@ public class GymEquipmentBooking extends Booking{
         super(memberId, bookingId, date, startTime, endTime);
     }
     
+    public GymEquipmentBooking(String memberId, String bookingId, Date date, LocalTime startTime, LocalTime endTime, double totalPrice) {
+        super(memberId, bookingId, date, startTime, endTime);
+        this.totalPrice = totalPrice; 
+    }
+    public double getTotalPrice(){
+        return totalPrice;
+    }
+    
     @Override
     public double calculateTotalPrice(){
         // get the hours from its superclass 
@@ -32,7 +41,7 @@ public class GymEquipmentBooking extends Booking{
         
         // give discount if book more than 3 hours in one booking
         if(hours > 3){
-            return totalPrice = totalPrice * (totalPrice * 0.05);
+            return totalPrice = totalPrice * 0.95;
         }
         else{
             return totalPrice;
@@ -41,6 +50,8 @@ public class GymEquipmentBooking extends Booking{
     
     @Override
     public String toString(){
-        return "Booking ID: " + super.getBookingId() + "\nDate: " + super.getDate() + "\nTime: " + super.getStartTime() + " - " + super.getEndTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String date = dateFormat.format(super.getDate());
+        return "Booking ID: " + super.getBookingId() + "\nDate: " + date + "\nTime: " + super.getStartTime() + " - " + super.getEndTime() + "\nTotal Price: RM" + String.format("%.2f", totalPrice) + "\n\n";
     }
 }

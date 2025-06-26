@@ -4,13 +4,14 @@
  */
 package GymBookingSystem;
 
-import java.text.SimpleDateFormat;
-import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author ooikn
  */
+import javax.swing.JOptionPane;
+
 public class SearchAndDisplayBooking extends javax.swing.JFrame {
     private String memberId;
     private BookingList bookingList;
@@ -27,7 +28,6 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
     
     private void displayAllBooking() {
         boolean found = false;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String bookings = "";
         
         for (Booking booking : bookingList.getBookingList()) {
@@ -37,7 +37,7 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
             }
         }
         if(!found){
-            System.out.println("You have not make any booking!");
+            bookings += "You have not make any booking!";
         }
         bookingDisplayArea.setText(bookings);
     }
@@ -57,6 +57,7 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         bookingDisplayArea = new javax.swing.JTextArea();
         searchBtn = new javax.swing.JButton();
+        exitBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,21 +76,34 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
             }
         });
 
+        exitBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        exitBtn.setText("Exit");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(bookingIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(searchBtn))
-                    .addComponent(jScrollPane1))
+                        .addGap(61, 61, 61)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(bookingIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(searchBtn))
+                            .addComponent(jScrollPane1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(155, 155, 155)
+                        .addComponent(exitBtn)))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -104,7 +118,9 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(exitBtn)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         pack();
@@ -119,6 +135,10 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Booking not found");
         }
     }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exitBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,6 +178,7 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea bookingDisplayArea;
     private javax.swing.JTextField bookingIdTf;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
