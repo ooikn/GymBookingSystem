@@ -68,6 +68,7 @@ public class UpdateBooking extends javax.swing.JFrame {
         exitBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Update Booking Form");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Update Booking");
@@ -136,15 +137,15 @@ public class UpdateBooking extends javax.swing.JFrame {
                             .addComponent(bookingIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchBtn)
-                        .addContainerGap(28, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 24, Short.MAX_VALUE)
                         .addComponent(exitBtn)
                         .addGap(18, 18, 18)
                         .addComponent(resetBtn)
                         .addGap(18, 18, 18)
                         .addComponent(saveBtn)
-                        .addGap(68, 68, 68))))
+                        .addGap(66, 66, 66))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,10 +168,9 @@ public class UpdateBooking extends javax.swing.JFrame {
                     .addComponent(endTimeCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(saveBtn)
-                        .addComponent(resetBtn))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveBtn)
+                    .addComponent(resetBtn)
                     .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
@@ -233,6 +233,12 @@ public class UpdateBooking extends javax.swing.JFrame {
                 DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
                 LocalTime startTime = LocalTime.parse(startTimeStr, format);
                 LocalTime endTime = LocalTime.parse(endTimeStr, format);
+                
+                // check for time clash
+                if (bookingList.hasTimeClash(memberId, selectedDate, startTime, endTime, bookingId)) {
+                    JOptionPane.showMessageDialog(this, "Time clash with existing booking! Please choose another time slot.");
+                    return;
+                }
                 
                 GymEquipmentBooking callWithoutPrice = new GymEquipmentBooking(memberId, bookingId, selectedDate, startTime, endTime); //
                 callWithoutPrice.calculateTotalPrice();

@@ -96,83 +96,41 @@ public class MemberList {
         }
     }
     
-    public boolean checkUsernameTaken(String username){
-        File inFile = new File("members.txt");
-        try {
-            FileReader inFileReader = new FileReader(inFile);
-            BufferedReader inStream = new BufferedReader(inFileReader);
-            
-            String str;
-            
-            // read every line in the file to to check for matching username and password
-            while ((str = inStream.readLine()) != null) {
-                String[] parts = str.split(",");
-                if (parts[1].equals(username)) {
-                    return true;
-                }
+    public boolean checkUsernameTaken(String username, String memberId){
+        for (Member member : memberList) {
+            // member with same username but different member id
+            if (member.getUsername().equals(username) && (memberId == null || !member.getMemberId().equals(memberId))) {
+                return true; // username is taken
             }
-        } catch (IOException e) {
-            System.err.println("Error checking username taken: " + e.getMessage());
+        }
+        return false; // username s not taken
+    }
+    
+    public boolean validateLogin(String username, String password) {
+        // read every line in the file to to check for matching username and password
+        for (Member member : memberList) {
+            if (member.getUsername().equals(username)) {
+                return member.getPassword().trim().equals(password.trim());
+            }
         }
         return false;
     }
     
-    public boolean validateLogin(String username, String password){
-        File inFile = new File("members.txt");
-        try {
-            FileReader inFileReader = new FileReader(inFile);
-            BufferedReader inStream = new BufferedReader(inFileReader);
-            
-            String str;
-            
-            // read every line in the file to to check for matching username and password
-            while ((str = inStream.readLine()) != null) {
-                String[] parts = str.split(",");
-                if (parts[1].equals(username)) {
-                    return parts[4].trim().equals(password.trim());
-                }
+    public String getMemberId(String username) {
+        for (Member member : memberList) {
+            if (member.getUsername().trim().equals(username.trim())) {
+                return member.getMemberId().trim();
             }
-        } catch (IOException e) {
-            System.err.println("Login error: " + e.getMessage());
-        }
-        return false;
-    }
-    
-    public String getMemberId(String username){
-        try (BufferedReader inStream = new BufferedReader(new FileReader("members.txt"))) {
-            String str;
-            while ((str = inStream.readLine()) != null) {
-                String[] parts = str.split(",");
-                if (parts.length >= 5 && parts[1].trim().equals(username.trim())) {
-                    return parts[0].trim();
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error finding member ID: " + e.getMessage());
         }
         return null;
     }
     
     // retrieve the profile details that match the row of memberId
-    public Member getMemberProfile(String memberId){
-        try{
-            File inFile = new File("members.txt");
-            FileReader inFileStream = new FileReader(inFile);
-            BufferedReader inStream = new BufferedReader(inFileStream);
-            String str;
-            
-            while ((str = inStream.readLine()) != null){
-                // divide into parts by splitting the comma
-                String[] parts = str.split(",");
-                if (parts[0].equals(memberId)) {
-                    //format: memberId, username, phoneNo, email, password
-                    return new Member(parts[0], parts[1], parts[2], parts[3], parts[4]);
-                    
-                }
+    public Member getMemberProfile(String memberId) {
+        for (Member member : memberList) {
+            if (member.getMemberId().equals(memberId)) {
+                return member;
             }
-            inStream.close();
-        }catch (IOException e) {
-            System.out.println("Error reading member data: " + e.getMessage());
         }
         return null;
     }

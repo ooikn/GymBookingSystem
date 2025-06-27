@@ -40,6 +40,31 @@ public class BookingList {
         } 
     }
     
+    public boolean hasTimeClash(String memberId, Date date, LocalTime newStartTime, LocalTime newEndTime, String excludeBookingId) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String newDateStr = dateFormat.format(date);
+
+        for (Booking booking : bookingList) {
+            // check if same member and same date
+            if (booking.getMemberId().equals(memberId)) {
+                // convert date into string
+                String existingDateStr = dateFormat.format(booking.getDate());
+                
+                // existing date and new date are the same 
+                if (existingDateStr.equals(newDateStr)) {
+                    LocalTime existingStart = booking.getStartTime();
+                    LocalTime existingEnd = booking.getEndTime();
+
+                    // check for time clash
+                    if ((newStartTime.isBefore(existingEnd) && newEndTime.isAfter(existingStart))) {
+                        return true; // time clash found
+                    }
+                }
+            }
+        }
+        return false; // no time clash
+    }
+    
     public Booking searchBooking(String bookingId) {
         for (Booking b : bookingList) {
             GymEquipmentBooking gymBooking = (GymEquipmentBooking) b;
@@ -88,11 +113,11 @@ public class BookingList {
                 outStream.println(gymBooking.getMemberId() + "," + gymBooking.getBookingId() + "," + dateStr + "," + startTimeStr + "," + endTimeStr + "," + gymBooking.getTotalPrice());
             }
         } catch (IOException e) {
-            System.out.println("Error saving booking data: " + e.getMessage());
+            System.out.println("Error saving booking details: " + e.getMessage());
         }finally {
             if (outStream != null) {
                 outStream.close(); 
-                System.out.println("PrintWriter closed."); 
+                System.out.println("Close outstream."); 
             }
         }
     }

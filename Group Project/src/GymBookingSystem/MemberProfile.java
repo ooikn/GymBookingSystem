@@ -22,6 +22,7 @@ public class MemberProfile extends javax.swing.JFrame {
         this.memberId = memberId;
         initComponents();
         memberList = new MemberList();
+        memberInfo = memberList.getMemberProfile(this.memberId);
         //password is set to hide by default
         passwordTf.setEchoChar('•');
         
@@ -42,7 +43,6 @@ public class MemberProfile extends javax.swing.JFrame {
     }
     
     private void displayProfileInfo() {
-        memberInfo = memberList.getMemberProfile(memberId);
         memberIdLbl.setText(memberInfo.getMemberId());
         usernameTf.setText(memberInfo.getUsername());
         phoneNoTf.setText(memberInfo.getPhoneNo());
@@ -59,6 +59,7 @@ public class MemberProfile extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         usernameTf = new javax.swing.JTextField();
@@ -76,7 +77,19 @@ public class MemberProfile extends javax.swing.JFrame {
         editBtn = new javax.swing.JButton();
         saveBtn = new javax.swing.JButton();
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Profile Form");
 
         jLabel2.setText("Username:");
 
@@ -110,7 +123,6 @@ public class MemberProfile extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(38, 38, 38)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(memberIdLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(emailTf)
                                 .addGap(84, 84, 84))
@@ -120,7 +132,10 @@ public class MemberProfile extends javax.swing.JFrame {
                                 .addComponent(toggleViewPwdBtn))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(156, 156, 156)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(memberIdLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -135,7 +150,7 @@ public class MemberProfile extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(memberIdLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(memberIdLbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -189,9 +204,9 @@ public class MemberProfile extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
+                        .addGap(145, 145, 145)
                         .addComponent(editBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(saveBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(172, 172, 172)
@@ -248,7 +263,7 @@ public class MemberProfile extends javax.swing.JFrame {
             // prompt member to fill in all fields
             JOptionPane.showMessageDialog(this, "Please fill in all fields!");
         }
-        else if (!memberList.checkUsernameTaken(username)) {
+        else if (memberList.checkUsernameTaken(username, memberInfo.getMemberId())) {
             JOptionPane.showMessageDialog(this, "Username is already taken! Please choose a different one!");
         }
         else if(!Pattern.matches(phoneRegex, phoneNo)){
@@ -344,6 +359,7 @@ public class MemberProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel memberIdLbl;
     private javax.swing.JPasswordField passwordTf;
     private javax.swing.JTextField phoneNoTf;

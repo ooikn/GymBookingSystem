@@ -58,6 +58,7 @@ public class AddBooking extends javax.swing.JFrame {
         exitBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Add Booking Form");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Add Booking");
@@ -174,7 +175,7 @@ public class AddBooking extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
+                .addContainerGap(150, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(151, 151, 151))
             .addGroup(layout.createSequentialGroup()
@@ -212,8 +213,15 @@ public class AddBooking extends javax.swing.JFrame {
             String startTimeStr = (String) startTimeCb.getSelectedItem();
             String endTimeStr = (String) endTimeCb.getSelectedItem();
             DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime startTime = LocalTime.parse(startTimeStr, format) ;
-            LocalTime endTime = LocalTime.parse(endTimeStr, format) ;
+            LocalTime startTime = LocalTime.parse(startTimeStr, format);
+            LocalTime endTime = LocalTime.parse(endTimeStr, format);
+            
+            // check for time clash  // null for bookingId
+            if (bookingList.hasTimeClash(memberId, selectedDate, startTime, endTime, null)) {
+                JOptionPane.showMessageDialog(this, "Time clash with existing booking! Please choose another time slot!");
+                return;
+            }
+            
             String bookingId;
             do {
                 Random rand = new Random();
