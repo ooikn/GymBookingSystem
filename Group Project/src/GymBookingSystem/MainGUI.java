@@ -10,19 +10,15 @@ package GymBookingSystem;
  */
 public class MainGUI extends javax.swing.JFrame {
     private String memberId; 
-    
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
-    }
+   
     /**
      * Creates new form GUI
      */
-    public MainGUI() {
+    public MainGUI(String memberId) {
         initComponents();
-
+        this.memberId = memberId;
         setSize(650, 500);
         setLocationRelativeTo(null);
-        
     }
 
     /**
@@ -193,7 +189,7 @@ public class MainGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainGUI().setVisible(true);
+                new MainGUI("M001").setVisible(true);
             }
         });
     }

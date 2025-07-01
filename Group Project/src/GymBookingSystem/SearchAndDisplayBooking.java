@@ -136,7 +136,7 @@ public class SearchAndDisplayBooking extends javax.swing.JFrame {
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         String bookingId = bookingIdTf.getText().trim();
-        Booking booking = bookingList.searchBooking(bookingId);
+        Booking booking = bookingList.searchBooking(bookingId, memberId);
         if (booking != null) {
             bookingDisplayArea.setText(booking.toString());
         } else {

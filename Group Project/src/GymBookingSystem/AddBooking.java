@@ -4,15 +4,15 @@
  */
 package GymBookingSystem;
 
+/**
+ *
+ * @author ooikn
+ */
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author ooikn
- */
 public class AddBooking extends javax.swing.JFrame {
     private String memberId; // initialize memberId of member logged in
     private BookingList bookingList;
@@ -227,7 +227,7 @@ public class AddBooking extends javax.swing.JFrame {
                 Random rand = new Random();
                 int randNum = rand.nextInt(1000);
                 bookingId = "B" + randNum;
-            } while (bookingList.searchBooking(bookingId) != null);
+            } while (bookingList.searchBooking(bookingId, memberId) != null);
             Booking tempWithoutPrice = new GymEquipmentBooking(memberId, bookingId, selectedDate, startTime, endTime);
             tempWithoutPrice.calculateTotalPrice();
             double totalPrice = ((GymEquipmentBooking) tempWithoutPrice).getTotalPrice();

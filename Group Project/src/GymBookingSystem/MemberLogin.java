@@ -4,20 +4,20 @@
  */
 package GymBookingSystem;
 
-import java.io.*;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author ooikn
  */
+import javax.swing.JOptionPane;
+
 public class MemberLogin extends javax.swing.JFrame {
-    MemberList members = new MemberList();
+    MemberList members;
     /**
      * Creates new form MemberLoginOrRegistration
      */
     public MemberLogin() {
         initComponents();
+        members = new MemberList();
         passwordTf.setEchoChar('•');
         setLocationRelativeTo(null);
     }
@@ -157,8 +157,7 @@ public class MemberLogin extends javax.swing.JFrame {
         else if(members.validateLogin(username, password)){
             String memberId = members.getMemberId(username);
 
-            MainGUI mainGUI = new MainGUI();
-            mainGUI.setMemberId(memberId);
+            MainGUI mainGUI = new MainGUI(memberId);
             mainGUI.setVisible(true);
 
             this.dispose();// close the login form

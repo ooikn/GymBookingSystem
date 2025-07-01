@@ -65,18 +65,18 @@ public class BookingList {
         return false; // no time clash
     }
     
-    public Booking searchBooking(String bookingId) {
+    public Booking searchBooking(String bookingId, String memberId) {
         for (Booking b : bookingList) {
             GymEquipmentBooking gymBooking = (GymEquipmentBooking) b;
-            if (gymBooking.getBookingId().equalsIgnoreCase(bookingId)) {
+            if (gymBooking.getBookingId().equalsIgnoreCase(bookingId) && gymBooking.getMemberId().equalsIgnoreCase(memberId)) {
                 return gymBooking;  // return booking if found
             }
         }
         return null; // return null if booking not found
     }
     
-    public boolean deleteBooking(String bookingId){
-        Booking b = searchBooking(bookingId);
+    public boolean deleteBooking(String bookingId, String memberId){
+        Booking b = searchBooking(bookingId, memberId);
         if(b != null){
             bookingList.remove(b);
             saveToFile();
@@ -90,7 +90,7 @@ public class BookingList {
         return new ArrayList<>(bookingList); 
     }
     
-    public void saveToFile(){
+    private void saveToFile(){
         File outFile = new File("bookings.txt");
         FileWriter outFileStream = null;
         PrintWriter outStream = null;    

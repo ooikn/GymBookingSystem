@@ -4,14 +4,14 @@
  */
 package GymBookingSystem;
 
-import java.util.Random;
-import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author ooikn
  */
+import java.util.Random;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 public class MemberRegister extends javax.swing.JFrame {
     private MemberList memberList;
     /**
@@ -246,8 +246,7 @@ public class MemberRegister extends javax.swing.JFrame {
             Member newMember = new Member(memberId, username, phoneNumber, email, password);
             
             memberList.addMember(newMember);
-            MainGUI mainGUI = new MainGUI();
-            mainGUI.setMemberId(memberId);
+            MainGUI mainGUI = new MainGUI(memberId);
             mainGUI.setVisible(true);
             this.dispose();// close the register form
         }

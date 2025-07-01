@@ -44,7 +44,7 @@ public class MemberList {
         return null; // return null if member not found
     }
     
-    public void saveToFile(){
+    private void saveToFile(){
         File outFile = new File("members.txt");
         FileWriter outFileStream = null;
         PrintWriter outStream = null;    

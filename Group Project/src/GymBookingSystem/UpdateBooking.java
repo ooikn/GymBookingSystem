@@ -4,16 +4,16 @@
  */
 package GymBookingSystem;
 
+/**
+ *
+ * @author ooikn
+ */
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author ooikn
- */
 public class UpdateBooking extends javax.swing.JFrame {
     private String memberId; // store the memberId of currently logged in member
     private BookingList bookingList;
@@ -219,7 +219,7 @@ public class UpdateBooking extends javax.swing.JFrame {
             String bookingId = bookingIdTf.getText();
             
             //Check if the booking exist in the array list
-            Booking existingBooking = bookingList.searchBooking(bookingId);
+            Booking existingBooking = bookingList.searchBooking(bookingId, memberId);
             
             // if the booking exist and it belongs to the member logged in
             if (existingBooking != null && existingBooking.getMemberId().equals(memberId)) {
@@ -274,7 +274,7 @@ public class UpdateBooking extends javax.swing.JFrame {
         }
         else{ // booking id entered
             String bookingId = bookingIdTf.getText(); 
-            Booking booking = bookingList.searchBooking(bookingId); // search booking with the booking Id to display in form
+            Booking booking = bookingList.searchBooking(bookingId, memberId); // search booking with the booking Id to display in form
             
             // booking exist
             if (booking != null) { 
@@ -292,7 +292,7 @@ public class UpdateBooking extends javax.swing.JFrame {
             } 
             //booking not exist
             else { 
-                JOptionPane.showMessageDialog(this, "Booking not found");
+                JOptionPane.showMessageDialog(this, "Booking not found!");
             }
         }
     }//GEN-LAST:event_searchBtnActionPerformed

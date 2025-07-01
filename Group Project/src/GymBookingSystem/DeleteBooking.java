@@ -12,6 +12,7 @@ package GymBookingSystem;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
+
 public class DeleteBooking extends javax.swing.JFrame {
     private String memberId; // initialize memberId of member logged in
     private BookingList bookingList;
@@ -140,8 +141,8 @@ public class DeleteBooking extends javax.swing.JFrame {
         String bookingId = bookingIdTf.getText();
         boolean found = false;
         
-        Booking existingBooking = bookingList.searchBooking(bookingId);
-        if (existingBooking != null && existingBooking.getMemberId().equals(memberId)) {
+        Booking existingBooking = bookingList.searchBooking(bookingId, memberId);
+        if (existingBooking != null) {
             Date date = existingBooking.getDate();
             Calendar bookingdate = Calendar.getInstance();
             bookingdate.setTime(date);
@@ -160,7 +161,7 @@ public class DeleteBooking extends javax.swing.JFrame {
             else{
                 int choice = JOptionPane.showConfirmDialog(this, String.format("Are you sure you want to delete this booking?"), "Confirm Deletion", JOptionPane.YES_NO_OPTION );
                 if(choice == JOptionPane.YES_OPTION){
-                    bookingList.deleteBooking(bookingId);
+                    bookingList.deleteBooking(bookingId, memberId);
                     //hide the password again
                     bookingIdTf.setText("");
                     JOptionPane.showMessageDialog(this, "Booking deleted!");
