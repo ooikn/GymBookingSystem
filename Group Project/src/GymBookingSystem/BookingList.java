@@ -167,7 +167,7 @@ public class BookingList {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading member data on load: " + e.getMessage());
+            System.out.println("Error reading booking data on load: " + e.getMessage());
         } 
     }
 }
