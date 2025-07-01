@@ -8,6 +8,9 @@ package GymBookingSystem;
  *
  * @author ooikn
  */
+
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JOptionPane;
 public class DeleteBooking extends javax.swing.JFrame {
     private String memberId; // initialize memberId of member logged in
@@ -139,10 +142,31 @@ public class DeleteBooking extends javax.swing.JFrame {
         
         Booking existingBooking = bookingList.searchBooking(bookingId);
         if (existingBooking != null && existingBooking.getMemberId().equals(memberId)) {
-            bookingList.deleteBooking(bookingId);
-            //hide the password again
-            bookingIdTf.setText("");
-            JOptionPane.showMessageDialog(this, "Booking deleted!");
+            Date date = existingBooking.getDate();
+            Calendar bookingdate = Calendar.getInstance();
+            bookingdate.setTime(date);
+            bookingdate.set(Calendar.HOUR_OF_DAY, 0);
+            bookingdate.set(Calendar.MINUTE, 0);
+            bookingdate.set(Calendar.SECOND, 0);
+            bookingdate.set(Calendar.MILLISECOND, 0);
+            Calendar currentdate = Calendar.getInstance();
+            currentdate.set(Calendar.HOUR_OF_DAY, 0);
+            currentdate.set(Calendar.MINUTE, 0);
+            currentdate.set(Calendar.SECOND, 0);
+            currentdate.set(Calendar.MILLISECOND, 0);
+            if(currentdate.after(bookingdate) || currentdate.equals(bookingdate)){
+                JOptionPane.showMessageDialog(this, "Cannot delete past or current day bookings.");
+            }
+            else{
+                int choice = JOptionPane.showConfirmDialog(this, String.format("Are you sure you want to delete this booking?"), "Confirm Deletion", JOptionPane.YES_NO_OPTION );
+                if(choice == JOptionPane.YES_OPTION){
+                    bookingList.deleteBooking(bookingId);
+                    //hide the password again
+                    bookingIdTf.setText("");
+                    JOptionPane.showMessageDialog(this, "Booking deleted!");
+                }
+            }
+            
         }
         else {
             JOptionPane.showMessageDialog(this, "Booking not found!");

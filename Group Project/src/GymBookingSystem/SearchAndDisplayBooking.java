@@ -4,8 +4,6 @@
  */
 package GymBookingSystem;
 
-
-
 /**
  *
  * @author ooikn

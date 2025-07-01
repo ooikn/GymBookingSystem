@@ -225,7 +225,6 @@ public class UpdateBooking extends javax.swing.JFrame {
             if (existingBooking != null && existingBooking.getMemberId().equals(memberId)) {
                 // get all the fields
                 Date selectedDate = dateChooser.getDate();
-
                 String startTimeStr = (String) startTimeCb.getSelectedItem();
                 String endTimeStr = (String) endTimeCb.getSelectedItem();
                 
